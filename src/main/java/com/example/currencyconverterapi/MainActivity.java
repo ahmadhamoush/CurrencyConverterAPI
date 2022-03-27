@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://172.20.10.3/currency_api/api.php";
+        String url = "http://172.20.10.3/currency_api/api1.php";
 
 // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        rate.setText(response.substring(9,14));
+                        int updated_rate = Integer.parseInt(response.substring(9,14));
+                        rate.setText("Rate: " + updated_rate);
 
                         Log.d(response, "onResponse: ");
                     }
