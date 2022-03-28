@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/overlay"
     tools:context=".MainActivity">
+
 
 
     <Button
@@ -26,6 +28,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:drawableStart="@drawable/custom_money"
+        android:drawablePadding="12dp"
+        android:background="@drawable/custom_input"
         android:hint="Enter Number"
         android:inputType="textPersonName"
         android:minHeight="48dp"
@@ -40,8 +47,12 @@
         android:id="@+id/usd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:buttonTint="#03A9F4"
         android:text="USD"
+        android:button="@drawable/custom_checkbox"
+        android:checked="false"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        app:useMaterialThemeColors = "false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.732"
@@ -53,14 +64,18 @@
         android:id="@+id/lbp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:buttonTint="#03A9F4"
+        android:button="@drawable/custom_checkbox"
+        android:checked="false"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:text="LBP"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintHorizontal_bias="0.264"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/converted_text"
-        app:layout_constraintVertical_bias="0.06999999" />
+        app:layout_constraintVertical_bias="0.067"
+        app:useMaterialThemeColors="false" />
 
     <TextView
         android:id="@+id/converted_text"
@@ -92,11 +107,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Convert To"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/convert"
         app:layout_constraintEnd_toStartOf="@+id/usd"
+        app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toEndOf="@+id/lbp"
         app:layout_constraintTop_toBottomOf="@+id/converted_text"
-        app:layout_constraintVertical_bias="0.39" />
+        app:layout_constraintVertical_bias="0.45" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

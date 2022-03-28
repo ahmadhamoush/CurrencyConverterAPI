@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void convert(View v){
-
         if(dollar.isChecked() && lbp.isChecked()){
             Toast.makeText(getBaseContext(), "Please check only one currency", Toast.LENGTH_LONG).show();
             result.setText("Please check only one currency");
