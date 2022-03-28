@@ -1,11 +1,14 @@
 package com.example.currencyconverterapi;
 
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     String rate_url;
     String updated_rate;
     String currency;
+    Button btn;
 
     private EditText amount;
     private CheckBox lbp;
@@ -42,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView result;
     private TextView rate_text;
     private static final DecimalFormat df = new DecimalFormat("0.00");
+
+    private void animate(View v){
+        v.setAlpha(0f);
+        v.setTranslationY(100);
+        v.animate().alpha(1f).translationYBy(-100).setDuration(1500);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,27 +63,36 @@ public class MainActivity extends AppCompatActivity {
         dollar = findViewById(R.id.usd);
         result = (TextView) findViewById(R.id.converted_text);
         rate_text = (TextView) findViewById(R.id.rate_text);
+        btn = (Button) findViewById(R.id.convert);
+
+        animate(btn);
+        animate(lbp);
+        animate(dollar);
+        animate(result);
+        animate(rate_text);
+        animate(amount);
+        animate(findViewById(R.id.convert_to));
 
         // fetch rate at the start of the app to store the updated rate globally to be used
         fetch_rate();
 
     }
 
-
-
     public void convert(View v){
+
         if(dollar.isChecked() && lbp.isChecked()){
             Toast.makeText(getBaseContext(), "Please check only one currency", Toast.LENGTH_LONG).show();
             result.setText("Please check only one currency");
         }
-         if(lbp.isChecked()){
+        else if(lbp.isChecked()){
             currency = "USD";
         }
-         if(dollar.isChecked()){
+         else if(dollar.isChecked()){
             currency = "LBP";
         }
         else{
             Toast.makeText(getBaseContext(), "Please check a currency", Toast.LENGTH_LONG).show();
+
         }
 
         String url = "http://172.20.10.3/currency_api/api2.php";
@@ -84,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 //This code is executed if the server responds, whether or not the response contains data.
                 //The String 'response' contains the server's response.
                 Log.d("Response:", response.toString());
+
 
                 try{
                     JSONObject jObject = new JSONObject(response);
@@ -98,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
                         result.setText("Converted: " + amount + " USD");
                     }
 
-                    rate_text.setText("Updated Rate: $ = " + rate+ " LBP");
                 }catch (JSONException e){
                     Log.e("Error", e.getMessage());
                 }
@@ -126,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void fetch_rate() {
-        rate_url = "http://172.20.10.3/currency_api/api1.php";
 
+        rate_url = "http://172.20.10.3/currency_api/api1.php";
         getRate(rate_url);
 
     }
@@ -142,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         updated_rate = response.substring(9,14);
+                        rate_text.setText("Updated Rate: $ = " + updated_rate+ " LBP");
                     }
                 }, new Response.ErrorListener() {
             @Override

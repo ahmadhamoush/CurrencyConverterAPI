@@ -6,17 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <Button
         android:id="@+id/convert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="convert"
+        android:shadowColor="#685757"
         android:text="Convert"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65999997" />
+        app:layout_constraintVertical_bias="0.658" />
 
     <EditText
         android:id="@+id/number"
@@ -37,6 +40,7 @@
         android:id="@+id/usd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:buttonTint="#03A9F4"
         android:text="USD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,6 +53,7 @@
         android:id="@+id/lbp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:buttonTint="#03A9F4"
         android:text="LBP"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +88,7 @@
         app:layout_constraintVertical_bias="0.13" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/convert_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Convert To"
