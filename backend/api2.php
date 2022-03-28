@@ -30,7 +30,7 @@
 	$to_be_converted_obj = [];
 
 	while($amount = $array->fetch_assoc()){
-    $to_be_converted_obj[] = $amount;
+		$to_be_converted_obj[] = $amount;
 	}
 
 	$to_be_converted_json = json_encode($to_be_converted_obj);
