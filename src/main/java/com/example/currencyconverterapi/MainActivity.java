@@ -34,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
     String rate_url;
     String updated_rate;
-    String result;
     String currency;
 
     private EditText amount;
     private CheckBox lbp;
     private CheckBox dollar;
-    private TextView result_text;
+    private TextView result;
+    private TextView rate_text;
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         amount = (EditText) findViewById(R.id.number);
         lbp = findViewById(R.id.lbp);
         dollar = findViewById(R.id.usd);
-        result_text = (TextView) findViewById(R.id.converted_text);
+        result = (TextView) findViewById(R.id.converted_text);
+        rate_text = (TextView) findViewById(R.id.rate_text);
 
         // fetch rate at the start of the app to store the updated rate globally to be used
         fetch_rate();
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     public void convert(View v){
         if(dollar.isChecked() && lbp.isChecked()){
             Toast.makeText(getBaseContext(), "Please check only one currency", Toast.LENGTH_LONG).show();
-            result_text.setText("Please check only one currency");
+            result.setText("Please check only one currency");
         }
          if(lbp.isChecked()){
             currency = "USD";
@@ -90,11 +91,14 @@ public class MainActivity extends AppCompatActivity {
                     String amount = converted.getString("amount");
                     String rate = converted.getString("rate");
                     String currency = converted.getString("currency");
-                    Log.i("converted", converted.toString());
-                    Log.i("amount:", amount);
-                    Log.i("rate:", rate);
-                    Log.i("currency:", currency);
+                    if(currency.equals("LBP")){
+                        result.setText("Converted: " + amount + " LBP");
+                    }
+                    else if(currency.equals("USD")){
+                        result.setText("Converted: " + amount + " USD");
+                    }
 
+                    rate_text.setText("Updated Rate: $ = " + rate+ " LBP");
                 }catch (JSONException e){
                     Log.e("Error", e.getMessage());
                 }
@@ -143,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(error.getMessage(), "onErrorResponse: ");
-                result_text.setText("Failed to fetch rate");
+                result.setText("Failed to fetch rate");
             }
         });
 
