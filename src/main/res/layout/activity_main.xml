@@ -23,6 +23,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.658" />
 
+    <Button
+        android:id="@+id/convert3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goBack"
+        android:shadowColor="#685757"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.97" />
+
     <EditText
         android:id="@+id/number"
         android:layout_width="wrap_content"
@@ -47,18 +61,19 @@
         android:id="@+id/usd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="USD"
         android:button="@drawable/custom_checkbox"
         android:checked="false"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
-        app:useMaterialThemeColors = "false"
+        android:text="USD"
+        android:textColor="@color/gradient"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.732"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/converted_text"
-        app:layout_constraintVertical_bias="0.06999999" />
+        app:layout_constraintVertical_bias="0.06999999"
+        app:useMaterialThemeColors="false" />
 
     <CheckBox
         android:id="@+id/lbp"
@@ -69,6 +84,7 @@
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:text="LBP"
+        android:textColor="@color/gradient"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.264"
@@ -82,6 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Converted: "
+        android:textColor="@color/gradient"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/convert"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,6 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Updated Rate:  "
+        android:textColor="@color/gradient"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/convert"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,6 +125,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Convert To"
+        android:textColor="@color/gradient"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/convert"
         app:layout_constraintEnd_toStartOf="@+id/usd"
