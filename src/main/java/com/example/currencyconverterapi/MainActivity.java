@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox dollar;
     private TextView result;
     private TextView rate_text;
+    private TextView name_intent;
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     private void animate(View v){
@@ -65,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
         result = (TextView) findViewById(R.id.converted_text);
         rate_text = (TextView) findViewById(R.id.rate_text);
         btn = (Button) findViewById(R.id.convert);
+        name_intent= (TextView) findViewById(R.id.name_intent);
+
+        Intent i = getIntent();
+        String name = (String) i.getSerializableExtra("name");
+        name_intent.setText("Hello " + name);
 
         animate(btn);
         animate(lbp);
@@ -73,9 +79,14 @@ public class MainActivity extends AppCompatActivity {
         animate(rate_text);
         animate(amount);
         animate(findViewById(R.id.convert_to));
+        animate(name_intent);
+
+
 
         // fetch rate at the start of the app to store the updated rate globally to be used
         fetch_rate();
+
+
 
     }
 
@@ -162,6 +173,11 @@ public class MainActivity extends AppCompatActivity {
 
                         updated_rate = response.substring(9,14);
                         rate_text.setText("Updated Rate: $ = " + updated_rate+ " LBP");
+                        if(updated_rate.equals("ching")){
+                            rate_text.setText("Sorry, you are not allowed to check the rates.");
+                            result.setText("Failed to fetch rate");
+                            Log.e("code", "rest_cannot_get_rates");
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -41,21 +41,21 @@
         android:id="@+id/number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
+        android:background="@drawable/custom_input"
         android:drawableStart="@drawable/custom_money"
         android:drawablePadding="12dp"
-        android:background="@drawable/custom_input"
+        android:ems="10"
         android:hint="Enter Number"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         app:layout_constraintBottom_toTopOf="@+id/usd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56" />
+        app:layout_constraintVertical_bias="0.59000003" />
 
     <CheckBox
         android:id="@+id/usd"
@@ -133,5 +133,16 @@
         app:layout_constraintStart_toEndOf="@+id/lbp"
         app:layout_constraintTop_toBottomOf="@+id/converted_text"
         app:layout_constraintVertical_bias="0.45" />
+
+    <TextView
+        android:id="@+id/name_intent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gradient"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
