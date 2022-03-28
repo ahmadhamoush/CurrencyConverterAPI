@@ -2,6 +2,7 @@ package com.example.currencyconverterapi;
 
 import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView result;
     private TextView rate_text;
     private TextView name_intent;
+    private TextView swipe_text;
+    private SwipeRefreshLayout refresh_layout;
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     private void animate(View v){
@@ -67,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         rate_text = (TextView) findViewById(R.id.rate_text);
         btn = (Button) findViewById(R.id.convert);
         name_intent= (TextView) findViewById(R.id.name_intent);
+        swipe_text = (TextView) findViewById(R.id.swipe_text);
+        refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe);
 
         Intent i = getIntent();
         String name = (String) i.getSerializableExtra("name");
@@ -80,12 +85,21 @@ public class MainActivity extends AppCompatActivity {
         animate(amount);
         animate(findViewById(R.id.convert_to));
         animate(name_intent);
-
+        animate(swipe_text);
 
 
         // fetch rate at the start of the app to store the updated rate globally to be used
         fetch_rate();
 
+        refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetch_rate();
+                rate_text.setText("Getting Updated Rate...");
+                result.setText("");
+                refresh_layout.setRefreshing(false);
+            }
+        });
 
 
     }
@@ -103,54 +117,59 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             Toast.makeText(getBaseContext(), "Please check a currency", Toast.LENGTH_LONG).show();
-
         }
 
-        String url = "http://172.20.10.3/currency_api/api2.php";
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response){
-                //This code is executed if the server responds, whether or not the response contains data.
-                //The String 'response' contains the server's response.
-                Log.d("Response:", response.toString());
+       if(!amount.getText().toString().isEmpty() && !currency.isEmpty() ){
+           String url = "http://172.20.10.3/currency_api/api2.php";
+           RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
+           StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+               @Override
+               public void onResponse(String response){
+                   //This code is executed if the server responds, whether or not the response contains data.
+                   //The String 'response' contains the server's response.
+                   Log.d("Response:", response.toString());
 
+                   try{
+                       JSONObject jObject = new JSONObject(response);
+                       JSONObject converted = jObject.getJSONObject("converted");
+                       String amount = converted.getString("amount");
+                       String rate = converted.getString("rate");
+                       String currency = converted.getString("currency");
+                       if(currency.equals("LBP")){
+                           result.setText("Converted: " + amount + " LBP");
+                       }
+                       else if(currency.equals("USD")){
+                           result.setText("Converted: " + amount + " USD");
+                       }
 
-                try{
-                    JSONObject jObject = new JSONObject(response);
-                    JSONObject converted = jObject.getJSONObject("converted");
-                    String amount = converted.getString("amount");
-                    String rate = converted.getString("rate");
-                    String currency = converted.getString("currency");
-                    if(currency.equals("LBP")){
-                        result.setText("Converted: " + amount + " LBP");
-                    }
-                    else if(currency.equals("USD")){
-                        result.setText("Converted: " + amount + " USD");
-                    }
+                   }catch (JSONException e){
+                       Log.e("Error", e.getMessage());
+                   }
 
-                }catch (JSONException e){
-                    Log.e("Error", e.getMessage());
-                }
+               }
+           }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+               @Override
+               public void onErrorResponse(VolleyError error) {
+                   //This code is executed if there is an error.
+                   Log.e("Err:", error.getMessage());
+               }
+           }) {
+               protected Map<String, String> getParams() {
+                   Map<String, String> MyData = new HashMap<String, String>();
+                   MyData.put("amount", amount.getText().toString());
+                   MyData.put("rate", updated_rate);
+                   MyData.put("currency", currency);
+                   return MyData;
+               }
+           };
 
-            }
-        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //This code is executed if there is an error.
-                Log.e("Err:", error.getMessage());
-            }
-        }) {
-            protected Map<String, String> getParams() {
-                Map<String, String> MyData = new HashMap<String, String>();
-                MyData.put("amount", amount.getText().toString());
-                MyData.put("rate", updated_rate);
-                MyData.put("currency", currency);
-                return MyData;
-            }
-        };
+           MyRequestQueue.add(MyStringRequest);
+       }
 
-        MyRequestQueue.add(MyStringRequest);
+        else{
+            result.setText("Please check an amount is inserted. And a currency is checked.");
+       }
+
 
     }
 

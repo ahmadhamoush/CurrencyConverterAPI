@@ -7,7 +7,47 @@
     android:background="@drawable/overlay"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/swipe_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Swipe Up to Refresh"
+        android:textColor="@color/gradient"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.82" />
 
+    <TextView
+        android:id="@+id/converted_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gradient"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/convert"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.79" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <Button
         android:id="@+id/convert"
@@ -55,7 +95,7 @@
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.59000003" />
+        app:layout_constraintVertical_bias="0.61" />
 
     <CheckBox
         android:id="@+id/usd"
@@ -71,7 +111,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.732"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/converted_text"
+        app:layout_constraintTop_toBottomOf="@id/rate_text"
         app:layout_constraintVertical_bias="0.06999999"
         app:useMaterialThemeColors="false" />
 
@@ -89,12 +129,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.264"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/converted_text"
+        app:layout_constraintTop_toBottomOf="@id/rate_text"
         app:layout_constraintVertical_bias="0.067"
         app:useMaterialThemeColors="false" />
 
     <TextView
-        android:id="@+id/converted_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Converted: "
@@ -103,8 +142,8 @@
         app:layout_constraintBottom_toTopOf="@+id/convert"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/number"
-        app:layout_constraintVertical_bias="0.41000003" />
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/rate_text"
@@ -131,7 +170,7 @@
         app:layout_constraintEnd_toStartOf="@+id/usd"
         app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toEndOf="@+id/lbp"
-        app:layout_constraintTop_toBottomOf="@+id/converted_text"
+        app:layout_constraintTop_toBottomOf="@id/rate_text"
         app:layout_constraintVertical_bias="0.45" />
 
     <TextView
