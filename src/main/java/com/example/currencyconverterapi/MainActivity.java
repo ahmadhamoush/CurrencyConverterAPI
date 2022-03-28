@@ -18,9 +18,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -66,11 +63,12 @@ public class MainActivity extends AppCompatActivity {
     public void convert(View v){
         if(dollar.isChecked() && lbp.isChecked()){
             Toast.makeText(getBaseContext(), "Please check only one currency", Toast.LENGTH_LONG).show();
+            result_text.setText("Please check only one currency");
         }
-        else if(lbp.isChecked()){
+         if(lbp.isChecked()){
             currency = "USD";
         }
-        else if(dollar.isChecked()){
+         if(dollar.isChecked()){
             currency = "LBP";
         }
         else{
@@ -81,10 +79,26 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response){
                 //This code is executed if the server responds, whether or not the response contains data.
                 //The String 'response' contains the server's response.
                 Log.d("Response:", response.toString());
+
+                try{
+                    JSONObject jObject = new JSONObject(response);
+                    JSONObject converted = jObject.getJSONObject("converted");
+                    String amount = converted.getString("amount");
+                    String rate = converted.getString("rate");
+                    String currency = converted.getString("currency");
+                    Log.i("converted", converted.toString());
+                    Log.i("amount:", amount);
+                    Log.i("rate:", rate);
+                    Log.i("currency:", currency);
+
+                }catch (JSONException e){
+                    Log.e("Error", e.getMessage());
+                }
+
             }
         }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
             @Override
