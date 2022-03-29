@@ -11,7 +11,7 @@
         android:id="@+id/swipe_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Swipe Up to Refresh"
+        android:text="Swipe Down to Refresh"
         android:textColor="@color/gradient"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
