@@ -30,15 +30,21 @@
 	$to_be_converted_obj = [];
 
 	while($amount = $array->fetch_assoc()){
-		$to_be_converted_obj[] = $amount;
+    $to_be_converted_obj[] = $amount;
 	}
 
 	$to_be_converted_json = json_encode($to_be_converted_obj);
 
-	$myObj = json_decode($to_be_converted_json, true); //accessing JSON properties
-	$amount_to_convert = $myObj[0]["amount"];
-	$updated_rate = $myObj[0]["rate"];
-	$currency = $myObj[0]["currency"];
+	try {
+		$myObj = json_decode($to_be_converted_json, true); //accessing JSON properties
+		$amount_to_convert = $myObj[0]["amount"];
+		$updated_rate = $myObj[0]["rate"];
+		$currency = $myObj[0]["currency"];	
+		
+	} catch (Exception $e) {
+		echo "xxxxRate fetched: Wrong format";
+		
+	}
 
 	if($currency == "LBP"){ //converting to USD 
 		$conversion =number_format((float)($amount_to_convert / $updated_rate), 2, '.', '');
@@ -46,7 +52,7 @@
 
 	}
 	else if($currency == "USD"){ //converting to LBP
-		$conversion =number_format((float)($amount_to_convert * $updated_rate), 3, ',', ',');
+		$conversion =number_format((float)($amount_to_convert * $updated_rate), 3, '.', ',');
 		$converted_currency = 'LBP';
 	}
 	else{
